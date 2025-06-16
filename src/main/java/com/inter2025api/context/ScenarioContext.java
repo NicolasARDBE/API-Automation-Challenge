@@ -1,4 +1,4 @@
-package com.api_testing.context;
+package com.inter2025api.context;
 
 public class ScenarioContext{
     private final TestContext testContext;
