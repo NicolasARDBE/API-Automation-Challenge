@@ -5,30 +5,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.logging.Logger;
-import com.inter2025api.facedes.ListManagementFacade;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import com.inter2025api.context.ScenarioContext;
 import com.inter2025api.context.TestContext;
+import com.inter2025api.services.facedes.ListManagementFacade;
 
+//Calls Facade
 public class ListManagementSteps {
     private static final Logger logger = Logger.getLogger(ListManagementSteps.class.getName());
     private final TestContext testContext;
     private final ListManagementFacade listManagementFacade;
 
-    public ListManagementSteps(TestContext testContext, ListManagementFacade listManagementFacade) {
-        this.testContext = testContext;
-        this.listManagementFacade = listManagementFacade;
+    public ListManagementSteps(ScenarioContext scenarioContext) {
+        this.testContext = scenarioContext.getTestContext();
+        this.listManagementFacade = new ListManagementFacade(testContext);
     }
 
     @Given("a new list is created")
     public void a_new_list_is_created() {
-        // Assuming ListManagementFacade creates a new list on instantiation or has a reset method
         logger.info("A new list is created.");
-        // If needed: listManagementFacade.resetList();
+        listManagementFacade.createList("My List", "This is a test list", true);
+        assertEquals(logger, listManagementFacade);
+        logger.info("List created successfully.");
     }
 
     @When("items are added to the list")
