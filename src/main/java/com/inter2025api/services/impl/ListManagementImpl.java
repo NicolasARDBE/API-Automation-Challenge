@@ -2,14 +2,31 @@ package com.inter2025api.services.impl;
 
 import java.util.List;
 
+import com.inter2025api.config.RestAssuredClient;
+import com.inter2025api.config.RestAssuredClientFactory;
 import com.inter2025api.services.entity.ListManagementService;
+import com.inter2025api.utils.Constants;
 
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class ListManagementImpl implements ListManagementService{
 
+    private final RestAssuredClient restAssuredClient = new RestAssuredClient();
+
+    @Override
+    public Response requestToken(String apiKey) {
+        RequestSpecification request = RestAssuredClientFactory.createRequest();
+        restAssuredClient.addQueryParam(request, "api_Key", Constants.API_KEY);
+        Response r = restAssuredClient.get(request, apiKey);
+        //testContext.set("request_token", r.jsonPath().getString("session_id"));
+        return r;
+    }
+
     @Override
     public Response createList(String sessionId, String name, String description, boolean isPublic) {
+        RequestSpecification request = RestAssuredClientFactory.createRequest();
+        restAssuredClient.addBody(request, request);
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createList'");
     }

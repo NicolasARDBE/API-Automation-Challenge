@@ -3,6 +3,7 @@ package com.inter2025api.services.entity;
 import io.restassured.response.Response;
 
 public interface ListManagementService {
+    Response requestToken(String apiKey);
     Response createList(String sessionId, String name, String description, boolean isPublic);
     Response addItemToList(String sessionId, String listId, String mediaId);
     Response removeItemFromList(String sessionId, String listId, String mediaId);

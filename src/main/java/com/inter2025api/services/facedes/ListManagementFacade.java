@@ -15,6 +15,10 @@ public class ListManagementFacade {
         this.testContext = testContext;
     }
 
+    public Response requestToken(String apiKey) {
+        return listManagementService.requestToken(apiKey);
+    }
+
     public Response createList(String name, String description, boolean isPublic) {
         String sessionId = (String) testContext.get("sessionId");
         return listManagementService.createList(sessionId, name, description, isPublic);
