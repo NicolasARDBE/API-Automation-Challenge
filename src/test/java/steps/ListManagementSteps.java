@@ -13,6 +13,7 @@ import io.cucumber.java.en.When;
 
 import com.inter2025api.context.ScenarioContext;
 import com.inter2025api.context.TestContext;
+import com.inter2025api.models.MovieList;
 import com.inter2025api.services.facedes.ListManagementFacade;
 
 //Calls Facade
@@ -29,8 +30,13 @@ public class ListManagementSteps {
     @Given("a new list is created")
     public void a_new_list_is_created() {
         logger.info("A new list is created.");
-        listManagementFacade.createList("My List", "This is a test list", true);
-        assertEquals(logger, listManagementFacade);
+        //Aquí debe usarse el ListHandler para asignarle la responsabilidad de crear la lista.
+        MovieList movieList = new MovieList();
+        movieList.setName("My List");
+        movieList.setDescription("This is a test list");
+        listManagementFacade.createList(movieList);
+        String listId = (String) testContext.get("listId");
+        assertNotNull(listId, "List ID should not be null after creation.");
         logger.info("List created successfully.");
     }
 

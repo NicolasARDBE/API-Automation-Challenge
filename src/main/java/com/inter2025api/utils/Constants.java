@@ -3,12 +3,9 @@ package com.inter2025api.utils;
 public class Constants {
 
     // Example API key constant
-    public static final String API_KEY = "your-api-key-here";
-    public static final String USERNAME = "your-api-key-here";
-    public static final String PASSWORD = "your-api-key-here";
-
-    // Base URL for API endpoints
-    public static final String BASE_URL = "https://api.example.com/";
+    public static final String API_KEY = "7db0ab654926a102d67c9232a6928ce7";
+    public static final String USERNAME = "Nicoardbe";
+    public static final String PASSWORD = "TestPassword123*";
 
     // Timeout values (in milliseconds)
     public static final int CONNECTION_TIMEOUT = 10000;

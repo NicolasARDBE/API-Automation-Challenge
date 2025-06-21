@@ -24,17 +24,3 @@ public class ConfigUtil {
         return properties.getProperty(key);
     }
 }
-
-/*public class Enti {
-    private static Enti instance;
-    
-    private Enti() {}
-    
-    public static synchronized Enti getInstance() {
-        if (instance == null) {
-            instance = new Enti();
-        }
-        return instance;
-    }
-    
-}*/

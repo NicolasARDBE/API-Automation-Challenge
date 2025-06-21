@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class List {
-    private String id;
+public class MovieList {
     private String name;
     private String description;
-    private boolean isPublic;
 }

@@ -1,6 +1,7 @@
 package com.inter2025api.services.facedes;
 
 import com.inter2025api.context.TestContext;
+import com.inter2025api.models.MovieList;
 import com.inter2025api.services.impl.ListManagementImpl;
 import com.inter2025api.services.entity.ListManagementService;
 
@@ -15,12 +16,35 @@ public class ListManagementFacade {
         this.testContext = testContext;
     }
 
-    public Response requestToken(String apiKey) {
-        return listManagementService.requestToken(apiKey);
+    public void requestToken() {
+        Response response = listManagementService.requestToken();
+        System.out.println("Request Token Response: " + response.jsonPath().getString("request_token"));
+        testContext.set("request_token", response.jsonPath().getString("request_token"));
     }
 
-    public Response createList(String name, String description, boolean isPublic) {
+    public void createSessionLogin() {
+        listManagementService.createSessionLogin(testContext.get("request_token").toString());
+    }
+
+    public void createSession() {
+        String requestToken = (String) testContext.get("request_token");
+        Response response = listManagementService.createSession(requestToken);
+        System.out.println("Session ID: " + response.jsonPath().getString("session_id"));
+        testContext.set("sessionId", response.jsonPath().getString("session_id"));
+    }
+
+    public Response deleteList() {
         String sessionId = (String) testContext.get("sessionId");
-        return listManagementService.createList(sessionId, name, description, isPublic);
+        String listId = (String) testContext.get("listId");
+        return listManagementService.deleteList(sessionId, listId);
+    }
+
+
+    public Response createList(MovieList list) {
+        String sessionId = (String) testContext.get("sessionId");
+        Response response = listManagementService.createList(sessionId, list);
+        System.out.println("Created List ID: " + response.jsonPath().getString("list_id"));
+        testContext.set("listId", response.jsonPath().getString("list_id"));
+        return response;
     }
 }
