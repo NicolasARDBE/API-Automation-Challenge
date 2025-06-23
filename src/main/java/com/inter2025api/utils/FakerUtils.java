@@ -24,4 +24,12 @@ public class FakerUtils {
     public static String generateRandomAddress() {
         return faker.address().fullAddress();
     }
+
+    public static String generateRandomListName() {
+        return "List " + faker.number().numberBetween(1, 1000);
+    }
+
+    public static String generateRandomListDescription() {
+        return faker.lorem().sentence();
+    }
 }

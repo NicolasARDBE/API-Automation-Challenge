@@ -16,35 +16,29 @@ public class ListManagementFacade {
         this.testContext = testContext;
     }
 
-    public void requestToken() {
-        Response response = listManagementService.requestToken();
-        System.out.println("Request Token Response: " + response.jsonPath().getString("request_token"));
-        testContext.set("request_token", response.jsonPath().getString("request_token"));
-    }
-
-    public void createSessionLogin() {
-        listManagementService.createSessionLogin(testContext.get("request_token").toString());
-    }
-
-    public void createSession() {
-        String requestToken = (String) testContext.get("request_token");
-        Response response = listManagementService.createSession(requestToken);
-        System.out.println("Session ID: " + response.jsonPath().getString("session_id"));
-        testContext.set("sessionId", response.jsonPath().getString("session_id"));
-    }
-
     public Response deleteList() {
         String sessionId = (String) testContext.get("sessionId");
         String listId = (String) testContext.get("listId");
         return listManagementService.deleteList(sessionId, listId);
     }
 
-
     public Response createList(MovieList list) {
         String sessionId = (String) testContext.get("sessionId");
         Response response = listManagementService.createList(sessionId, list);
-        System.out.println("Created List ID: " + response.jsonPath().getString("list_id"));
         testContext.set("listId", response.jsonPath().getString("list_id"));
+        testContext.set("list", list);
         return response;
+    }
+
+    public Response addItemsToList(MovieList list) {
+        String sessionId = (String) testContext.get("sessionId");
+        String listId = (String) testContext.get("listId");
+        return listManagementService.addItemsToList(sessionId, listId, list.getMovies());
+    }
+
+    public Response getListDetails() {
+        String sessionId = (String) testContext.get("sessionId");
+        String listId = (String) testContext.get("listId");
+        return listManagementService.getListDetails(sessionId, listId);
     }
 }
