@@ -22,7 +22,7 @@ public class CucumberHooks {
 
     @Before
     public void beforeScenario(Scenario scenario) {
-        scenarioContext.getTestContext().set("scenarioName", scenario.getName());
+        //scenarioContext.getTestContext().set("scenarioName", scenario.getName());
         try {
             sessionFacade.requestToken();
             sessionFacade.createSessionLogin();

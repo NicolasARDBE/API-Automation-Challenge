@@ -22,39 +22,39 @@ public class ListManagementImpl implements ListManagementService{
     @Override
     public Response deleteList(String sessionId, String listId) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
-        restAssuredClient.addQueryParam(request, "session_id", sessionId);
-        request.pathParam("list-id", listId);
-        return restAssuredClient.delete(request, ConfigUtil.getProperty("list.delete"));
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
+        return restAssuredClient.delete(request, ConfigUtil.getProperty(Constants.DELETE_LIST));
     }
 
     @Override
     public Response createList(String sessionId, MovieList list) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
-        restAssuredClient.addQueryParam(request, "session_id", sessionId);
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
         restAssuredClient.addBody(request, list);
-        return restAssuredClient.post(request, ConfigUtil.getProperty("list.create"));
+        return restAssuredClient.post(request, ConfigUtil.getProperty(Constants.CREATE_LIST));
     }
 
     @Override
     public Response addItemsToList(String sessionId, String listId, List<Movie> movies) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
-        restAssuredClient.addQueryParam(request, "session_id", sessionId);
-        request.pathParam("list-id", listId);
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
         AddMoviesRequest body = new AddMoviesRequest(movies);
         restAssuredClient.addBody(request, body);
-        return restAssuredClient.post(request, ConfigUtil.getProperty("list.addItems"));
+        return restAssuredClient.post(request, ConfigUtil.getProperty(Constants.ADD_ITEMS));
     }
 
     @Override
     public Response getListDetails(String sessionId, String listId) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
-        restAssuredClient.addQueryParam(request, "session_id", sessionId);
-        request.pathParam("list-id", listId);
-        return restAssuredClient.get(request, ConfigUtil.getProperty("list.get"));
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
+        return restAssuredClient.get(request, ConfigUtil.getProperty(Constants.GET));
     }
 
     @Override

@@ -2,10 +2,38 @@ package com.inter2025api.utils;
 
 public class Constants {
 
-    // Example API key constant
+    // API constant
     public static final String API_KEY = "7db0ab654926a102d67c9232a6928ce7";
     public static final String USERNAME = "Nicoardbe";
     public static final String PASSWORD = "TestPassword123*";
+
+    //Test context keys
+    public static final String REQUEST_TOKEN_CONTEXT = "requestToken";
+    public static final String SESSION_ID_CONTEXT = "sessionId";
+    public static final String LIST_ID_CONTEXT = "listId";
+    public static final String LIST_CONTEXT = "list";
+    public static final String MOVIES_CONTEXT = "movies";
+
+    //Paths and parameters
+    public static final String LIST_ID_PATH = "list_id";
+    public static final String REQUEST_TOKEN_PATH = "request_token";
+    public static final String SESSION_ID_PATH = "session_id";
+    public static final String API_KEY_PARAM = "api_key";
+    public static final String SESSION_ID_PARAM = "session_id";   
+    public static final String LIST_ID_PATH_PARAM = "list-id";
+
+    //Config.properties keys
+    public static final String DELETE_LIST = "list.delete";
+    public static final String CREATE_LIST = "list.create";
+    public static final String ADD_ITEMS = "list.addItems";
+    public static final String GET = "list.get";
+    public static final String REQUEST_TOKEN = "session.token";
+    public static final String CREATE_SESSION_LOGIN = "session.create.login";
+    public static final String CREATE_SESSION = "session.create";
+
+    // JSON file paths
+    public static final String MOVIE_LIST_JSON = "src/test/resources/data/items.json";
+    
 
     // Timeout values (in milliseconds)
     public static final int CONNECTION_TIMEOUT = 10000;

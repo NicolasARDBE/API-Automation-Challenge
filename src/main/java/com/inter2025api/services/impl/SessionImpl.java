@@ -17,30 +17,30 @@ public class SessionImpl implements SessionService{
     @Override
     public Response requestToken() {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
-        return restAssuredClient.get(request, ConfigUtil.getProperty("session.token"));
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        return restAssuredClient.get(request, ConfigUtil.getProperty(Constants.REQUEST_TOKEN));
     }
 
     @Override
     public Response createSessionLogin(String requestToken) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
         SessionRequest sessionRequest = new SessionRequest();
         sessionRequest.setUsername(Constants.USERNAME);
         sessionRequest.setPassword(Constants.PASSWORD);
         sessionRequest.setRequestToken(requestToken);
         restAssuredClient.addBody(request, sessionRequest);
-        return restAssuredClient.post(request, ConfigUtil.getProperty("session.create.login"));
+        return restAssuredClient.post(request, ConfigUtil.getProperty(Constants.CREATE_SESSION_LOGIN));
     }
 
     @Override
     public Response createSession(String requestToken) {
         RequestSpecification request = RestAssuredClientFactory.createRequest();
-        restAssuredClient.addQueryParam(request, "api_key", Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
         java.util.Map<String, String> credentials = new java.util.HashMap<>();
-        credentials.put("request_token", requestToken);
+        credentials.put(Constants.REQUEST_TOKEN_PATH, requestToken);
         restAssuredClient.addBody(request, credentials);
-        return restAssuredClient.post(request, ConfigUtil.getProperty("session.create"));
+        return restAssuredClient.post(request, ConfigUtil.getProperty(Constants.CREATE_SESSION));
     }
     
 }

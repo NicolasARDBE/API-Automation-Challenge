@@ -17,6 +17,7 @@ import com.inter2025api.models.Movie;
 import com.inter2025api.models.MovieList;
 import com.inter2025api.models.handlers.ListHandler;
 import com.inter2025api.services.facedes.ListManagementFacade;
+import com.inter2025api.utils.Constants;
 
 //Calls Facade
 public class ListManagementSteps {
@@ -36,19 +37,19 @@ public class ListManagementSteps {
         logger.info("A new list is created.");
         MovieList movieList = listHandler.createListRandomParams();
         listManagementFacade.createList(movieList);
-        String listId = (String) testContext.get("listId");
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
         assertNotNull(listId, "List ID should not be null after creation.");
         logger.info("List created successfully.");
     }
 
     @When("items are added to the list")
     public void items_are_added_to_the_list() {
-        MovieList movieList = (MovieList) testContext.get("list");
-        listHandler.addItemsToListFromJson(movieList, "src/test/resources/data/items.json");
+        MovieList movieList = (MovieList) testContext.get(Constants.LIST_CONTEXT);
+        listHandler.addItemsToListFromJson(movieList, Constants.MOVIE_LIST_JSON);
         if (movieList.getMovies().isEmpty()) {
             assertTrue(false, "No items were added to the list.");
         }
-        testContext.set("movies", movieList.getMovies());
+        testContext.set(Constants.MOVIES_CONTEXT, movieList.getMovies());
         listManagementFacade.addItemsToList(movieList);
         logger.info("Items added to the list: " + movieList.getMovies());
     }
@@ -57,7 +58,7 @@ public class ListManagementSteps {
     public void the_list_should_contain_the_added_items() {
         var response = listManagementFacade.getListDetails();
         List<Movie> itemsFromResponse = listHandler.extractItemsFromListResponse(response.asString());
-        List<Movie> itemsFromRequest = (List<Movie>) testContext.get("movies");
+        List<Movie> itemsFromRequest = (List<Movie>) testContext.get(Constants.MOVIES_CONTEXT);
         assertEquals(itemsFromRequest.size(), itemsFromResponse.size(), "The number of items in the list does not match the expected count.");
         logger.info("List contains the added items: " + itemsFromResponse);
     }
