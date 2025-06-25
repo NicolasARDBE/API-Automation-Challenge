@@ -69,8 +69,23 @@ public class ListManagementImpl implements ListManagementService{
     }
 
     @Override
-    public Response updateList(String sessionId, String listId, String name, String description, boolean isPublic) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateList'");
+    public Response updateList(String sessionId, String listId,  MovieList updatedList) {
+        RequestSpecification request = RestAssuredClientFactory.createRequest();
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
+        restAssuredClient.addBody(request, updatedList);
+        return restAssuredClient.put(request, ConfigUtil.getProperty(Constants.UPDATE_LIST));
+    }
+
+    @Override
+    public Response updateListItems(String sessionId, String listId, List<Movie> movies) {
+        RequestSpecification request = RestAssuredClientFactory.createRequest();
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
+        AddRemoveMoviesRequest body = new AddRemoveMoviesRequest(movies);
+        restAssuredClient.addBody(request, body);
+        return restAssuredClient.put(request, ConfigUtil.getProperty(Constants.UPDATE_LIST_ITEMS));
     }   
 }

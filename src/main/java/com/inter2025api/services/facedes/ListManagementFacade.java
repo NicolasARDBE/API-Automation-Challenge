@@ -54,4 +54,16 @@ public class ListManagementFacade {
         String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
         return listManagementService.removeItemsFromList(sessionId, listId, movies);
     }
+
+    public Response updateList(MovieList updatedList) {
+        String sessionId = (String) testContext.get(Constants.SESSION_ID_CONTEXT);
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
+        return listManagementService.updateList(sessionId, listId, updatedList);
+    }
+
+    public Response updateListItems(List<Movie> movies) {
+        String sessionId = (String) testContext.get(Constants.SESSION_ID_CONTEXT);
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
+        return listManagementService.updateListItems(sessionId, listId, movies);
+    }
 }

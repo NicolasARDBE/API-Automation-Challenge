@@ -32,4 +32,7 @@ public class FakerUtils {
     public static String generateRandomListDescription() {
         return faker.lorem().sentence();
     }
+    public static String generateRandomComment() {
+        return faker.lorem().sentence();
+    }
 }

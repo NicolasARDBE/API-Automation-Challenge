@@ -1,9 +1,11 @@
 package com.inter2025api.models.handlers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.inter2025api.models.Movie;
 import com.inter2025api.models.MovieList;
+import com.inter2025api.utils.Constants;
 import com.inter2025api.utils.FakerUtils;
 import com.inter2025api.utils.JsonUtils;
 
@@ -43,7 +45,7 @@ public class ListHandler {
 
     public void addItemsToListFromJson(MovieList list, String jsonFilePath) {
         try{
-            List<Movie> movies = JsonUtils.readJsonArray("src/test/resources/data/items.json",
+            List<Movie> movies = JsonUtils.readJsonArray(Constants.MOVIE_LIST_JSON,
              Movie.class);
             if (movies == null) {
                 return;
@@ -54,18 +56,41 @@ public class ListHandler {
         }
     }
 
-        public List<Movie> extractItemsFromListResponse(String jsonResponse) {
+    public List<Movie> extractItemsFromListResponse(String jsonResponse) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(jsonResponse);
-            JsonNode itemsNode = root.get("items");
-            if (itemsNode == null || !itemsNode.isArray()) {
+            JsonNode resultsNode = root.get("results");
+            JsonNode commentsNode = root.get("comments");
+            if (resultsNode == null || !resultsNode.isArray()) {
                 return List.of();
             }
-            return java.util.Arrays.asList(mapper.treeToValue(itemsNode, Movie[].class));
+            List<Movie> movies = new ArrayList<>();
+            for (JsonNode movieNode : resultsNode) {
+                Movie movie = mapper.treeToValue(movieNode, Movie.class);
+                // Buscar comentario por "movie:{id}"
+                if (commentsNode != null && movie.getId() != 0) {
+                    String commentKey = "movie:" + movie.getId();
+                    JsonNode commentValue = commentsNode.get(commentKey);
+                    if (commentValue != null && !commentValue.isNull()) {
+                        movie.setComment(commentValue.asText());
+                    }
+                }
+                movies.add(movie);
+            }
+            return movies;
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract items from list response", e);
         }
     }
 
+
+    public MovieList extractMovieListFromResponse(String jsonResponse) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(jsonResponse, MovieList.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to extract MovieList from response", e);
+        }
+    }
 }

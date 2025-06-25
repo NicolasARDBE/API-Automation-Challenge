@@ -1,22 +1,26 @@
 package com.inter2025api.models;
 
-import lombok.Setter;
-import groovy.transform.builder.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@Builder
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
+
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("media_type")
-    String mediaType;
+    private String mediaType;
+
     @JsonProperty("media_id")
-    String mediaId;
+    private int mediaId;
+
+    @JsonProperty("comment")
+    private String comment;
 }

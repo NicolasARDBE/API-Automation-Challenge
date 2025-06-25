@@ -18,6 +18,7 @@ import com.inter2025api.models.MovieList;
 import com.inter2025api.models.handlers.ListHandler;
 import com.inter2025api.services.facedes.ListManagementFacade;
 import com.inter2025api.utils.Constants;
+import com.inter2025api.utils.FakerUtils;
 
 //Calls Facade
 public class ListManagementSteps {
@@ -69,6 +70,25 @@ public class ListManagementSteps {
         logger.info("List deleted successfully.");
     }
 
+    @When("the list information is updated")
+    public void the_list_information_is_updated() {
+        MovieList movieList = listHandler.createListRandomParams();
+        testContext.set(Constants.UPDATED_LIST_CONTEXT, movieList);
+        listManagementFacade.updateList(movieList);
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
+        assertNotNull(listId, "List ID should not be null after update.");
+        logger.info("List information updated successfully.");
+    }
+
+    @When("the items in the list are updated")
+    public void the_items_in_the_list_are_updated() {
+        List<Movie> items = (List<Movie>) testContext.get(Constants.MOVIES_CONTEXT);
+        items.forEach(item -> item.setComment("Updated comment for " + FakerUtils.generateRandomComment()));
+        testContext.set(Constants.MOVIES_CONTEXT, items);
+        listManagementFacade.updateListItems(items);
+        logger.info("Items in the list updated successfully: " + items);
+    }
+
     @Then("the list should contain the added items")
     public void the_list_should_contain_the_added_items() {
         var response = listManagementFacade.getListDetails();
@@ -92,5 +112,26 @@ public class ListManagementSteps {
         assertEquals(404, response.getStatusCode(), "The list should not exist after deletion.");
         logger.info("List retrieval confirmed it no longer exists. Status code: " + response.getStatusCode());
     }
-    
+
+    @Then("the list should reflect the updated information")
+    public void the_list_should_reflect_the_updated_information() {
+        var response = listManagementFacade.getListDetails();
+        MovieList updatedList = listHandler.extractMovieListFromResponse(response.asString());
+        MovieList originalList = (MovieList) testContext.get(Constants.UPDATED_LIST_CONTEXT);
+        assertEquals(originalList.getName(), updatedList.getName(), "The list name should match the updated name.");
+        assertEquals(originalList.getDescription(), updatedList.getDescription(), "The list description should match the updated description.");
+        logger.info("List information updated successfully: " + updatedList);
+    }
+
+    @Then("the list should reflect the updated items")
+    public void the_list_should_reflect_the_updated_items() {
+        var response = listManagementFacade.getListDetails();
+        List<Movie> itemsFromResponse = listHandler.extractItemsFromListResponse(response.asString());
+        List<Movie> itemsFromRequest = (List<Movie>) testContext.get(Constants.MOVIES_CONTEXT);
+        assertEquals(itemsFromRequest.size(), itemsFromResponse.size(), "The number of items in the list does not match the expected count after update.");
+        for (int i = 0; i < itemsFromRequest.size(); i++) {
+            assertEquals(itemsFromRequest.get(i).getComment(), itemsFromResponse.get(i).getComment(), "The item comment should match the updated comment.");
+        }
+        logger.info("List items updated successfully: " + itemsFromResponse);
+    }
 }

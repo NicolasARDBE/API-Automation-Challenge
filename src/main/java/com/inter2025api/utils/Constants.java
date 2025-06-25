@@ -13,6 +13,7 @@ public class Constants {
     public static final String LIST_ID_CONTEXT = "listId";
     public static final String LIST_CONTEXT = "list";
     public static final String MOVIES_CONTEXT = "movies";
+    public static final String UPDATED_LIST_CONTEXT = "updatedList";
 
     //Paths and parameters
     public static final String LIST_ID_PATH = "list_id";
@@ -31,6 +32,9 @@ public class Constants {
     public static final String CREATE_SESSION_LOGIN = "session.create.login";
     public static final String CREATE_SESSION = "session.create";
     public static final String REMOVE_ITEMS = "list.removeItems";
+    public static final String UPDATE_LIST = "list.update";
+    public static final String UPDATE_LIST_ITEMS = "list.updateItems";
+    
 
     // JSON file paths
     public static final String MOVIE_LIST_JSON = "src/test/resources/data/items.json";
