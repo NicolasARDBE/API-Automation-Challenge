@@ -1,6 +1,9 @@
 package com.inter2025api.services.facedes;
 
+import java.util.List;
+
 import com.inter2025api.context.TestContext;
+import com.inter2025api.models.Movie;
 import com.inter2025api.models.MovieList;
 import com.inter2025api.services.impl.ListManagementImpl;
 import com.inter2025api.utils.Constants;
@@ -20,7 +23,10 @@ public class ListManagementFacade {
     public Response deleteList() {
         String sessionId = (String) testContext.get(Constants.SESSION_ID_CONTEXT);
         String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
-        return listManagementService.deleteList(sessionId, listId);
+        Response response = listManagementService.deleteList(sessionId, listId);
+        testContext.set(Constants.LIST_ID_CONTEXT, "");
+        testContext.set(Constants.LIST_CONTEXT, null);
+        return response;
     }
 
     public Response createList(MovieList list) {
@@ -41,5 +47,11 @@ public class ListManagementFacade {
         String sessionId = (String) testContext.get(Constants.SESSION_ID_CONTEXT);
         String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
         return listManagementService.getListDetails(sessionId, listId);
+    }
+
+    public Response removeItemsFromList(List<Movie> movies) {
+        String sessionId = (String) testContext.get(Constants.SESSION_ID_CONTEXT);
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
+        return listManagementService.removeItemsFromList(sessionId, listId, movies);
     }
 }

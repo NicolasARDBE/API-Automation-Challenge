@@ -54,6 +54,21 @@ public class ListManagementSteps {
         logger.info("Items added to the list: " + movieList.getMovies());
     }
 
+    @When("the items are deleted from the list")
+    public void the_items_are_deleted_from_the_list() {
+        List<Movie> items = (List<Movie>) testContext.get(Constants.MOVIES_CONTEXT);
+        listManagementFacade.removeItemsFromList(items);
+        logger.info("Items deleted from the list.");
+    }
+
+    @When("the list is deleted")
+    public void the_list_is_deleted() {
+        listManagementFacade.deleteList();
+        String listId = (String) testContext.get(Constants.LIST_ID_CONTEXT);
+        assertTrue(listId.isEmpty(), "List ID should be empty after deletion.");
+        logger.info("List deleted successfully.");
+    }
+
     @Then("the list should contain the added items")
     public void the_list_should_contain_the_added_items() {
         var response = listManagementFacade.getListDetails();
@@ -62,4 +77,20 @@ public class ListManagementSteps {
         assertEquals(itemsFromRequest.size(), itemsFromResponse.size(), "The number of items in the list does not match the expected count.");
         logger.info("List contains the added items: " + itemsFromResponse);
     }
+
+    @Then("the list should reflect the items deletions")
+    public void the_list_should_reflect_the_items_deletions() {
+        var response = listManagementFacade.getListDetails();
+        List<Movie> itemsFromResponse = listHandler.extractItemsFromListResponse(response.asString());
+        assertTrue(itemsFromResponse.isEmpty(), "The list should be empty after item deletions.");
+        logger.info("List is empty after deletions: " + itemsFromResponse);
+    }
+
+    @Then("retrieving the list should confirm it no longer exists")
+    public void retrieving_the_list_should_confirm_it_no_longer_exists() {
+        var response = listManagementFacade.getListDetails();
+        assertEquals(404, response.getStatusCode(), "The list should not exist after deletion.");
+        logger.info("List retrieval confirmed it no longer exists. Status code: " + response.getStatusCode());
+    }
+    
 }

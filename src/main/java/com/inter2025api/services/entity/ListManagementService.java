@@ -11,6 +11,6 @@ public interface ListManagementService {
     Response createList(String sessionId, MovieList list);
     Response addItemsToList(String sessionId, String listId, List<Movie> movies);
     Response getListDetails(String sessionId, String listId);
-    Response removeItemFromList(String sessionId, String listId, String mediaId);
+    Response removeItemsFromList(String sessionId, String listId, List<Movie> movies);
     Response updateList(String sessionId, String listId, String name, String description, boolean isPublic);
 }

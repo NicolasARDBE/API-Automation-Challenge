@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class AddMoviesRequest {
+public class AddRemoveMoviesRequest {
     private List<Movie> items;
 
-    public AddMoviesRequest(List<Movie> items) {
+    public AddRemoveMoviesRequest(List<Movie> items) {
         this.items = items;
     }
 }

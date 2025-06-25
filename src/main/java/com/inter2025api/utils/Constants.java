@@ -30,6 +30,7 @@ public class Constants {
     public static final String REQUEST_TOKEN = "session.token";
     public static final String CREATE_SESSION_LOGIN = "session.create.login";
     public static final String CREATE_SESSION = "session.create";
+    public static final String REMOVE_ITEMS = "list.removeItems";
 
     // JSON file paths
     public static final String MOVIE_LIST_JSON = "src/test/resources/data/items.json";

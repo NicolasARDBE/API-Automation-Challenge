@@ -13,7 +13,7 @@ import io.restassured.specification.RequestSpecification;
 
 import com.inter2025api.models.Movie;
 import com.inter2025api.models.MovieList;
-import com.inter2025api.models.dtos.AddMoviesRequest;
+import com.inter2025api.models.dtos.AddRemoveMoviesRequest;
 
 public class ListManagementImpl implements ListManagementService{
 
@@ -43,7 +43,7 @@ public class ListManagementImpl implements ListManagementService{
         restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
         restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
         request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
-        AddMoviesRequest body = new AddMoviesRequest(movies);
+        AddRemoveMoviesRequest body = new AddRemoveMoviesRequest(movies);
         restAssuredClient.addBody(request, body);
         return restAssuredClient.post(request, ConfigUtil.getProperty(Constants.ADD_ITEMS));
     }
@@ -58,9 +58,14 @@ public class ListManagementImpl implements ListManagementService{
     }
 
     @Override
-    public Response removeItemFromList(String sessionId, String listId, String mediaId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeItemFromList'");
+    public Response removeItemsFromList(String sessionId, String listId, List<Movie> movies) {
+        RequestSpecification request = RestAssuredClientFactory.createRequest();
+        restAssuredClient.addQueryParam(request, Constants.API_KEY_PARAM, Constants.API_KEY);
+        restAssuredClient.addQueryParam(request, Constants.SESSION_ID_PARAM, sessionId);
+        request.pathParam(Constants.LIST_ID_PATH_PARAM, listId);
+        AddRemoveMoviesRequest body = new AddRemoveMoviesRequest(movies);
+        restAssuredClient.addBody(request, body);
+        return restAssuredClient.delete(request, ConfigUtil.getProperty(Constants.REMOVE_ITEMS));
     }
 
     @Override
