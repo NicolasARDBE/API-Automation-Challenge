@@ -6,6 +6,7 @@ public class Constants {
     public static final String API_KEY = "7db0ab654926a102d67c9232a6928ce7";
     public static final String USERNAME = "Nicoardbe";
     public static final String PASSWORD = "TestPassword123*";
+    public static final String ACCOUNT_ID = "21918984";
 
     //Test context keys
     public static final String REQUEST_TOKEN_CONTEXT = "requestToken";
@@ -14,6 +15,8 @@ public class Constants {
     public static final String LIST_CONTEXT = "list";
     public static final String MOVIES_CONTEXT = "movies";
     public static final String UPDATED_LIST_CONTEXT = "updatedList";
+    public static final String MOVIE_ID_CONTEXT = "movieId";
+    public static final String RATING_CONTEXT = "rating";
 
     //Paths and parameters
     public static final String LIST_ID_PATH = "list_id";
@@ -22,6 +25,9 @@ public class Constants {
     public static final String API_KEY_PARAM = "api_key";
     public static final String SESSION_ID_PARAM = "session_id";   
     public static final String LIST_ID_PATH_PARAM = "list-id";
+    public static final String ACCOUNT_ID_PARAM = "account-id";
+
+    public static final String MOVIE_ID_PATH = "movie-id";
 
     //Config.properties keys
     public static final String DELETE_LIST = "list.delete";
@@ -34,7 +40,9 @@ public class Constants {
     public static final String REMOVE_ITEMS = "list.removeItems";
     public static final String UPDATE_LIST = "list.update";
     public static final String UPDATE_LIST_ITEMS = "list.updateItems";
-    
+    public static final String DELETE_RATING = "rating.delete";
+    public static final String ADD_RATING = "rating.add";
+    public static final String GET_RATED_MOVIES = "rating.get";
 
     // JSON file paths
     public static final String MOVIE_LIST_JSON = "src/test/resources/data/items.json";
@@ -52,6 +60,7 @@ public class Constants {
     // Content types
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String CONTENT_TYPE_XML = "application/xml";
+    
 
     // Status codes
     public static final int STATUS_OK = 200;

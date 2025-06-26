@@ -23,4 +23,7 @@ public class Movie {
 
     @JsonProperty("comment")
     private String comment;
+
+    @JsonProperty("rating")
+    private double rating;
 }

@@ -11,7 +11,6 @@ import com.inter2025api.services.entity.ListManagementService;
 
 import io.restassured.response.Response;
 
-//Uses ListrManagementService to handle list management operations through the implementation class ListManagementImpl.
 public class ListManagementFacade {
     private final ListManagementService listManagementService = new ListManagementImpl();
     private final TestContext testContext;

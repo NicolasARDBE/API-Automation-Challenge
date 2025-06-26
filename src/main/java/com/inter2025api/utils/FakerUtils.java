@@ -1,5 +1,7 @@
 package com.inter2025api.utils;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import com.github.javafaker.Faker;
 
 public class FakerUtils {
@@ -34,5 +36,9 @@ public class FakerUtils {
     }
     public static String generateRandomComment() {
         return faker.lorem().sentence();
+    }
+    public static double generateRandomRating() {
+        int steps = ThreadLocalRandom.current().nextInt(1, 21); 
+        return steps * 0.5;
     }
 }
